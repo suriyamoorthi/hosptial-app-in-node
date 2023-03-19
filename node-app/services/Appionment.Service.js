@@ -1,0 +1,207 @@
+const bcrypt = require("bcrypt");
+const { query } = require("express");
+const { string, any, ref } = require("joi");
+const helper = require("../helper/Appionment.helper");
+
+const statuscode_sucess = 200;
+const statuscode_Notfound = 404;
+
+const apiboday =
+{
+    Statuscode: Int32Array,
+    Message: string,
+    Data: any
+}
+function apibodyconstruct(statuscode, message, bodymessage) {
+    apiboday.Message = message;
+    apiboday.Statuscode = statuscode,
+        apiboday.Data = bodymessage
+
+    return apiboday;
+}
+
+const AppionmentService = {
+
+    async userAppionmentService(req, res) {
+        try {
+
+            //body validation
+            const appionmentUser = await helper.ValidateAppoinment(req.body);
+
+            //if status true
+            if (appionmentUser.Status) {
+
+                const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist(req.body["Email"], req.body["Date"])
+                console.log("APPIONMENT", userAllreayAppionment)
+          
+                if (userAllreayAppionment.length == 0) {
+
+                    const createApoointment = await helper.create(req.body);
+
+                    if (createApoointment) {
+
+                        return res.send(apibodyconstruct(statuscode_sucess, "appionment create sucess fully", ""));
+                    }
+                    else {
+                        return res.send(apibodyconstruct(statuscode_Notfound, "appionment not created sucess fully", ""));
+                    }
+
+                } else {
+                    return res.send(apibodyconstruct(statuscode_Notfound, " one user perday one appionment only", ""));
+                    // appionment alredy created for this emailid
+                }
+            } else {
+
+                return res.send(apibodyconstruct(statuscode_Notfound, appionmentUser.Message, ""));
+            }
+        }
+        catch (execption) {
+            console.log(execption);
+
+        }
+
+
+    },
+
+    async getAllUsers(req, res) {
+        try {
+            const allUser = await helper.find(req.body);
+            console.log("DATA", allUser);
+         
+            res.send(allUser);
+        }
+        catch (err) {
+            console.log("Error-", err.message);
+            res.status(500).send({ error: "cannot fetch all users -name" });
+        }
+
+
+
+    },
+
+    async getPatientVisityHistory(req, res) {
+        try {
+            const data = await helper.find(req.params.id);
+            console.log("GETPATIENTVISITY", data);
+            console.log("ALLUSERS");
+        //     let currentDate = new Date().toJSON().slice(0, 10);
+        // console.log(currentDate); // "2022-06-17"
+            res.send(data);
+        }
+        catch (err) {
+            console.log("Error-", err.message);
+            res.status(500).send({ error: "cannot fetch all users -name" });
+        }
+
+
+
+    },
+    async getCurrentDayAppionmentPatientList(req, res) {
+        try {
+
+            
+        //     console.log("QUREY",req.query.Date);
+
+        //     var j = {
+        //         "Date": req.query.Date
+        //       };
+
+        //    var jsonobject = JSON.stringify(j);
+        //    console.log("JsonOBJECT",jsonobject);
+            const allUser = await helper.find();
+            console.log("ALL USER",allUser);
+            //  let currentDate = new Date().toJSON().slice(0, 10);
+            // console.log(currentDate); // "2022-06-17"
+           
+
+            const {Date}=req.query;
+            console.log("DATEQURY",Date);
+            data=allUser.filter((history)=>history.Date == Date)
+            console.log("IFVALIDATION",data);
+           
+     
+            // return res.send(apibodyconstruct(statuscode_sucess, " one user perday one appionment only",  data));
+             res.send(data);
+        }
+        catch (err) {
+            console.log("Error-", err.message);
+            res.status(500).send({ error: "cannot fetch all users -name" });
+        }
+    },
+
+    async PatientListRecptionModuleT(req,res){
+
+        const PatientList=await helper.find()
+        console.log("RECPTION MODULE PATIENT LIST",PatientList);
+        
+        res.send(PatientList);
+       
+
+    },
+
+    async DoctorListPatientModule(req,res){
+
+        const DoctorList= await helper.findUsers(req.body["Usertype"]=2);
+        console.log("Doctor List Patient Module",DoctorList);
+        
+        res.send(DoctorList);
+       
+
+    },
+
+    async AssignDoctor(req, res){
+try{
+        const AssginDoctorList= await helper.findUsers(req.body["Usertype"]=2);
+        console.log("ASSGIN DOCTOR",AssginDoctorList);
+
+      
+            res.send(AssginDoctorList);
+        
+        // const {_id}=req.query;
+        // console.log("DATEQURY",_id);
+        // Doctordata=AssginDoctorList.filter((history)=>history._id ==_id)
+        // console.log("IFVALIDATION",Doctordata);
+
+      
+}
+
+    catch (err) {
+        console.log("Error-", err.message);
+        res.status(500).send({ error: "cannot fetch all users -name" });
+    }
+
+
+        // const {_id}=req.query;
+        // console.log("DATEQURY",_id);
+        // Doctordata=allUser.filter((history)=>history._id ==_id)
+        // console.log("IFVALIDATION",Doctordata);
+
+        
+
+    },
+
+    async patientVatilas12(req, res){
+
+        const patientvaltilaDatilas =await helper.PatientVatilas(req.body);
+        if(patientvaltilaDatilas.Status){
+            const createPatientVatilas= await helper.createPatientVatilas(req.body);
+        
+            if (createPatientVatilas) {
+
+                return res.send(apibodyconstruct(statuscode_sucess, "appionment create sucess fully", ""));
+            }
+            else {
+                return res.send(apibodyconstruct(statuscode_Notfound, "appionment not created sucess fully", ""));
+            }
+
+        }
+    else {
+
+        return res.send(apibodyconstruct(statuscode_Notfound, patientVatilasUser.Message, ""));
+    }
+
+    }
+
+}
+
+module.exports = AppionmentService;
