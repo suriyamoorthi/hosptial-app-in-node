@@ -28,7 +28,7 @@ function Validation(jsonvalue) {
         // var password= jsonvalue["Password"];
         var gender = jsonvalue["Gender"];
         var phonenumber = jsonvalue["Phonenumber"];
-        var date = jsonvalue["Date"];
+        var dateofbirth = jsonvalue["Dateofbirth"];
         var file = jsonvalue["File"];
         var address = jsonvalue["Address"];
 
@@ -73,8 +73,8 @@ function Validation(jsonvalue) {
             profileSechma.Status = false;
             return profileSechma;
         }
-        else if (!date) {
-            profileSechma.Message = "date is require";
+        else if (!dateofbirth) {
+            profileSechma.Message = "Dateofbirth is require";
             profileSechma.Status = false;
             return profileSechma;
         }
@@ -186,6 +186,202 @@ function ReceptionValidation(jsonvalue) {
 
 }
 
+function DoctroValidation(jsonvalue){
+    try{
+        var doctorfirstname = jsonvalue["Doctorfirstname"];
+        var doctorlastname =jsonvalue["Doctorlastname"];
+        // var department =jsonvalue["Department"];
+        // var exprience =jsonvalue["Exprience"];
+        var email = jsonvalue["Email"];
+        var phonenumber =jsonvalue["Phonenumber"];
+        var gender =jsonvalue["Gender"];
+        var dateofbirth =jsonvalue["Dateofbirth"];
+        var file =jsonvalue["File"];
+        var doctordetails =jsonvalue["Doctordetails"]
+        var address =jsonvalue["Address"];
+        console.log(" D0ctor first");
+        if (!doctorfirstname) {
+            profileSechma.Message = "Doctorfirstname is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!doctorlastname) {
+            profileSechma.Message = "Doctorlastname is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        // else if (!department) {
+        //     profileSechma.Message = "Department is require";
+        //     profileSechma.Status = false;
+        //     return profileSechma;
+        // }
+        // else if (!exprience) {
+        //     profileSechma.Message = "Exprience is require";
+        //     profileSechma.Status = false;
+        //     return profileSechma;
+        // }
+
+        else if (!email) {
+            profileSechma.Message = "Email is rquire";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!gender) {
+            profileSechma.Message = "Gender is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!Emailvalidation(email)) {
+            profileSechma.Message = "Enter the valid Email";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else if (!phonenumber) {
+            profileSechma.Message = "Phonenumber is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (String(phonenumber).length <= 9) {
+            profileSechma.Message = "Phonenumber must have 10 digts";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else if (!dateofbirth) {
+            profileSechma.Message = "dateofbirth is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!file) {
+            profileSechma.Message = "File is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!doctordetails) {
+            profileSechma.Message = "Doctordetails is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else if (!address) {
+            profileSechma.Message = "Address is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else {
+            
+            profileSechma.Message = "Success";
+            profileSechma.Status = true;
+            return profileSechma;
+        }
+
+    }
+  
+        catch (error) {
+            console.log(error.message);
+    
+        }
+
+    }
+ 
+function AdminValidation(jsonvalue){
+    console.log(" ADMINDDD first");
+    try{
+        var adminfirstname =jsonvalue["Adminfirstname"];
+        var adminlastname =jsonvalue["Adminlastname"];
+        var email = jsonvalue["Email"];
+        var phonenumber =jsonvalue["Phonenumber"];
+        var gender =jsonvalue["Gender"];
+        var age =jsonvalue["Age"];
+        var dateofbirth =jsonvalue["Dateofbirth"];
+        var file =jsonvalue["File"];
+        var address =jsonvalue["Address"];
+
+
+        console.log(" ADMINDDD first");
+        if (!adminfirstname) {
+            profileSechma.Message = "Admin Firstname is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!adminlastname) {
+            profileSechma.Message = "Admin Lastname is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+       
+
+        else if (!email) {
+            profileSechma.Message = "Email is rquire";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!gender) {
+            profileSechma.Message = "Gender is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!Emailvalidation(email)) {
+            profileSechma.Message = "Enter the valid Email";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else if (!phonenumber) {
+            profileSechma.Message = "Phonenumber is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (String(phonenumber).length <= 9) {
+            profileSechma.Message = "Phonenumber must have 10 digts";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!age) {
+            profileSechma.Message = "Age is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else if (!dateofbirth) {
+            profileSechma.Message = "dateofbirth is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+        else if (!file) {
+            profileSechma.Message = "File is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+     
+
+        else if (!address) {
+            profileSechma.Message = "Address is require";
+            profileSechma.Status = false;
+            return profileSechma;
+        }
+
+        else {
+            
+            profileSechma.Message = "Success";
+            profileSechma.Status = true;
+            return profileSechma;
+        }
+
+    }
+  
+        catch (error) {
+            console.log(error.message);
+    
+        }
+    }
+   
+
+
+
+
 const ProfileUpadateValidation = {
 
     validationProfile(profileUser) {
@@ -209,6 +405,28 @@ const ProfileUpadateValidation = {
 
     },
 
+    DoctorPofileValidation(DoctorUser){
+        try{
+            return  DoctroValidation(DoctorUser)
+        }
+        catch ({ details: [{ message }] }) {
+
+            throw new Error(message);
+        }
+    },
+
+   AdminProfileValidation(AdminUser){
+    console.log(" ADMINDDD first")
+    try{
+        return  AdminValidation(AdminUser)
+    }
+    catch ({ details: [{ message }] }) {
+
+        throw new Error(message);
+    }
+
+   },
+
     async findByEmail(Email) {
         console.log("email");
         return await db.Users.find({ Email }).toArray();
@@ -227,6 +445,15 @@ const ProfileUpadateValidation = {
         return db.Users.findOneAndUpdate({_id:ObjectId(_id)}, {$set: user1},{returnDocument:"after"});
     },
 
+    DoctorUpdate({_id, ...findEmail}){
+        console.log("DOCTOR UOADTE",findEmail)
+        return db.Users.findOneAndUpdate({_id:ObjectId(_id)}, {$set: findEmail},{returnDocument:"after"})
+    },
+
+    AdminUpdate({_id, ...findAdminEmail}){
+        console.log("Admin UOADTE",findAdminEmail)
+        return db.Users.findOneAndUpdate({_id:ObjectId(_id)}, {$set: findAdminEmail},{returnDocument:"after"})
+    }
 
 
 }
