@@ -31,6 +31,7 @@ function doctorValidation(jsonValue) {
         var confirmpassword = jsonValue["Confirmpassword"];
         var phonenumber = jsonValue["Phonenumber"];
         var gender = jsonValue["Gender"];
+        var age =jsonValue["Age"];
         var dateofbirth = jsonValue["Dateofbirth"];
         var doctordetails = jsonValue["Doctordetails"];
         var address = jsonValue["Address"];
@@ -97,6 +98,11 @@ function doctorValidation(jsonValue) {
             adimSechma.Status = false;
             return adimSechma;
         }
+        else if (!age) {
+            adimSechma.Message = "Age is Mismatch";
+            adimSechma.Status = false;
+            return adimSechma;
+        }
         else if (!dateofbirth) {
             adimSechma.Message = "Dateofbirth is Mismatch";
             adimSechma.Status = false;
@@ -139,6 +145,7 @@ function receptionValidate(jsonValue){
     var confirmpassword = jsonValue["Confirmpassword"];
     var phonenumber = jsonValue["Phonenumber"];
     var dateofbirth = jsonValue["Dateofbirth"];
+    var age = jsonValue["Age"];
     var gender = jsonValue["Gender"];
     var address = jsonValue["Address"];
     var file = jsonValue["File"];
@@ -193,6 +200,11 @@ function receptionValidate(jsonValue){
         adimSechma.Status = false;
         return adimSechma;
     }
+    else if(!age){
+        adimSechma.Message="Age is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
     else if(!gender){
         adimSechma.Message="Gender is require";
         adimSechma.Status = false;
@@ -216,6 +228,196 @@ function receptionValidate(jsonValue){
 
 }
 
+function AdminValidation(jsonValue){
+     var adminfirstname = jsonValue["Adminfirstname"];
+     var adminlastname = jsonValue["Adminlastname"];
+     var email = jsonValue["Email"];
+     var password = jsonValue["Password"];
+     var confirmpassword = jsonValue["Confirmpassword"];
+     var phonenumber = jsonValue["Phonenumber"];
+     var gender = jsonValue["Gender"];
+     var age = jsonValue["Age"];
+     var dateofbirth = jsonValue["Dateofbirth"];
+     var file = jsonValue["File"];
+     var address = jsonValue["Address"];
+  
+     console.log("IF VALIDATION START");
+
+     if(!adminfirstname){
+        adimSechma.Message="admin Firstname is require";
+        adimSechma.Status = false;
+        return adimSechma;
+     }
+     else  if(!adminlastname){
+        adimSechma.Message="admin Lastname is require";
+        adimSechma.Status = false;
+        return adimSechma;
+     }
+     else if(!email){
+        adimSechma.Message="Email is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!Emailvalidation(email)){
+        adimSechma.Message="email is invalid";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!password){
+        adimSechma.Message="Password is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!confirmpassword){
+        adimSechma.Message="Confirmpassword is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(password !== confirmpassword){
+        adimSechma.Message="Password is Mismatch";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!phonenumber){
+        adimSechma.Message="Phonenumber is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(String(phonenumber).length<=9){
+        adimSechma.Message="Phonenumber is must have 10 digts";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!gender){
+        adimSechma.Message="Gender is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!age){
+        adimSechma.Message="Age is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!dateofbirth){
+        adimSechma.Message="Datrofbirth is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+
+    else if(!file){
+        adimSechma.Message="File is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+    else if(!address){
+        adimSechma.Message="Address is require";
+        adimSechma.Status = false;
+        return adimSechma;
+    }
+
+    else {
+        adimSechma.Message="Success";
+        adimSechma.Status = true;
+        return adimSechma;
+    }
+
+
+}
+function AdminValidation(jsonValue){
+    var adminfirstname = jsonValue["Adminfirstname"];
+    var adminlastname = jsonValue["Adminlastname"];
+    var email = jsonValue["Email"];
+    var password = jsonValue["Password"];
+    var confirmpassword = jsonValue["Confirmpassword"];
+    var phonenumber = jsonValue["Phonenumber"];
+    var gender = jsonValue["Gender"];
+    var age = jsonValue["Age"];
+    var dateofbirth = jsonValue["Dateofbirth"];
+    var file = jsonValue["File"];
+    var address = jsonValue["Address"];
+ 
+    console.log("IF VALIDATION START");
+
+    if(!adminfirstname){
+       adimSechma.Message="admin Firstname is require";
+       adimSechma.Status = false;
+       return adimSechma;
+    }
+    else  if(!adminlastname){
+       adimSechma.Message="admin Lastname is require";
+       adimSechma.Status = false;
+       return adimSechma;
+    }
+    else if(!email){
+       adimSechma.Message="Email is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!Emailvalidation(email)){
+       adimSechma.Message="email is invalid";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!password){
+       adimSechma.Message="Password is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!confirmpassword){
+       adimSechma.Message="Confirmpassword is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(password !== confirmpassword){
+       adimSechma.Message="Password is Mismatch";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!phonenumber){
+       adimSechma.Message="Phonenumber is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(String(phonenumber).length<=9){
+       adimSechma.Message="Phonenumber is must have 10 digts";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!gender){
+       adimSechma.Message="Gender is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!age){
+       adimSechma.Message="Age is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!dateofbirth){
+       adimSechma.Message="Datrofbirth is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+
+   else if(!file){
+       adimSechma.Message="File is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+   else if(!address){
+       adimSechma.Message="Address is require";
+       adimSechma.Status = false;
+       return adimSechma;
+   }
+
+   else {
+       adimSechma.Message="Success";
+       adimSechma.Status = true;
+       return adimSechma;
+   }
+
+
+}
 
 
 
@@ -242,6 +444,18 @@ const adminAppionmentHelper = {
 
             throw new Error(message);
 
+        }
+
+    },
+
+    addAdminValidation(adminUser){
+        try{
+            return AdminValidation(adminUser)
+
+        }
+        catch ({ details: [{ message }] }) {
+
+            throw new Error(message);
         }
 
     },

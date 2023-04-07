@@ -33,8 +33,11 @@ const AppionmentService = {
 
                 const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist(req.body["Email"], req.body["Date"])
                 console.log("APPIONMENT", userAllreayAppionment)
-          
+
                 if (userAllreayAppionment.length == 0) {
+                    const addname =`${req.body["Firstname"]} ${req.body["Lastname"]}`
+
+                    req.body["Fullname"]=addname;
 
                     const createApoointment = await helper.create(req.body);
 
@@ -67,7 +70,7 @@ const AppionmentService = {
         try {
             const allUser = await helper.find(req.body);
             console.log("DATA", allUser);
-         
+
             res.send(allUser);
         }
         catch (err) {
@@ -81,11 +84,11 @@ const AppionmentService = {
 
     async getPatientVisityHistory(req, res) {
         try {
-            const data = await helper.find(req.params.id);
-            console.log("GETPATIENTVISITY", data);
+            const data = await helper.findGetPatientVisityHistory();
+            console.log("GET PATIENTVISITY", data);
             console.log("ALLUSERS");
-        //     let currentDate = new Date().toJSON().slice(0, 10);
-        // console.log(currentDate); // "2022-06-17"
+            //     let currentDate = new Date().toJSON().slice(0, 10);
+            // console.log(currentDate); // "2022-06-17"
             res.send(data);
         }
         catch (err) {
@@ -99,29 +102,29 @@ const AppionmentService = {
     async getCurrentDayAppionmentPatientList(req, res) {
         try {
 
-            
-        //     console.log("QUREY",req.query.Date);
 
-        //     var j = {
-        //         "Date": req.query.Date
-        //       };
+            //     console.log("QUREY",req.query.Date);
 
-        //    var jsonobject = JSON.stringify(j);
-        //    console.log("JsonOBJECT",jsonobject);
+            //     var j = {
+            //         "Date": req.query.Date
+            //       };
+
+            //    var jsonobject = JSON.stringify(j);
+            //    console.log("JsonOBJECT",jsonobject);
             const allUser = await helper.find();
-            console.log("ALL USER",allUser);
+            console.log("ALL USER", allUser);
             //  let currentDate = new Date().toJSON().slice(0, 10);
             // console.log(currentDate); // "2022-06-17"
-           
 
-            const {Date}=req.query;
-            console.log("DATEQURY",Date);
-            data=allUser.filter((history)=>history.Date == Date)
-            console.log("IFVALIDATION",data);
-           
-     
+
+            const { Date } = req.query;
+            console.log("DATEQURY", Date);
+            data = allUser.filter((history) => history.Date == Date)
+            console.log("IFVALIDATION", data);
+
+
             // return res.send(apibodyconstruct(statuscode_sucess, " one user perday one appionment only",  data));
-             res.send(data);
+            res.send(data);
         }
         catch (err) {
             console.log("Error-", err.message);
@@ -129,46 +132,46 @@ const AppionmentService = {
         }
     },
 
-    async PatientListRecptionModuleT(req,res){
+    async PatientListRecptionModuleT(req, res) {
 
-        const PatientList=await helper.find()
-        console.log("RECPTION MODULE PATIENT LIST",PatientList);
-        
+        const PatientList = await helper.find()
+        console.log("RECPTION MODULE PATIENT LIST", PatientList);
+
         res.send(PatientList);
-       
+
 
     },
 
-    async DoctorListPatientModule(req,res){
+    async DoctorListPatientModule(req, res) {
 
-        const DoctorList= await helper.findUsers(req.body["Usertype"]=2);
-        console.log("Doctor List Patient Module",DoctorList);
-        
+        const DoctorList = await helper.findUsers(req.body["Usertype"] = 2);
+        console.log("Doctor List Patient Module", DoctorList);
+
         res.send(DoctorList);
-       
+
 
     },
 
-    async AssignDoctor(req, res){
-try{
-        const AssginDoctorList= await helper.findUsers(req.body["Usertype"]=2);
-        console.log("ASSGIN DOCTOR",AssginDoctorList);
+    async AssignDoctor(req, res) {
+        try {
+            const AssginDoctorList = await helper.findUsers(req.body["Usertype"] = 2);
+            console.log("ASSGIN DOCTOR", AssginDoctorList);
 
-      
+
             res.send(AssginDoctorList);
-        
-        // const {_id}=req.query;
-        // console.log("DATEQURY",_id);
-        // Doctordata=AssginDoctorList.filter((history)=>history._id ==_id)
-        // console.log("IFVALIDATION",Doctordata);
 
-      
-}
+            // const {_id}=req.query;
+            // console.log("DATEQURY",_id);
+            // Doctordata=AssginDoctorList.filter((history)=>history._id ==_id)
+            // console.log("IFVALIDATION",Doctordata);
 
-    catch (err) {
-        console.log("Error-", err.message);
-        res.status(500).send({ error: "cannot fetch all users -name" });
-    }
+
+        }
+
+        catch (err) {
+            console.log("Error-", err.message);
+            res.status(500).send({ error: "cannot fetch all users -name" });
+        }
 
 
         // const {_id}=req.query;
@@ -176,31 +179,42 @@ try{
         // Doctordata=allUser.filter((history)=>history._id ==_id)
         // console.log("IFVALIDATION",Doctordata);
 
-        
+
 
     },
 
-    async patientVatilas12(req, res){
+    async patientVatilas12(req, res) {
+        try {
+            console.log("ERROR1");
+            const patientVatilasUser = await helper.ValidatePatientvatilas(req.body);
+            console.log("ERROR12", patientVatilasUser);
 
-        const patientvaltilaDatilas =await helper.PatientVatilas(req.body);
-        if(patientvaltilaDatilas.Status){
-            const createPatientVatilas= await helper.createPatientVatilas(req.body);
-        
-            if (createPatientVatilas) {
+            if (patientVatilasUser.Status) {
+                console.log("ERROR123", patientVatilasUser);
+                const addname =`${req.body["Firstname"]} ${req.body["Lastname"]}`;
+                req.body["Fullname"] = addname;
+                const createPatientVatilas = await helper.createPatientVatilas(req.body);
+                console.log("ERROR1234");
+                if (createPatientVatilas) {
 
-                return res.send(apibodyconstruct(statuscode_sucess, "appionment create sucess fully", ""));
+                    return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucess fully", ""));
+                }
+                else {
+                    return res.send(apibodyconstruct(statuscode_Notfound, "appionment not created sucess fully", ""));
+                }
+
             }
             else {
-                return res.send(apibodyconstruct(statuscode_Notfound, "appionment not created sucess fully", ""));
+
+                return res.send(apibodyconstruct(statuscode_Notfound, patientVatilasUser.Message, ""));
             }
-
         }
-    else {
+        catch {
+            console.log("404")
+        }
 
-        return res.send(apibodyconstruct(statuscode_Notfound, patientVatilasUser.Message, ""));
     }
 
-    }
 
 }
 

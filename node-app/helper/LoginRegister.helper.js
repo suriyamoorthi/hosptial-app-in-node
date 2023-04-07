@@ -32,6 +32,8 @@ function Validation(jsonvalue) {
         var confirmpassword = jsonvalue["Confirmpassword"];
         var phonenumber = jsonvalue["Phonenumber"];
         var gender = jsonvalue["Gender"];
+        var dateofbirth = jsonvalue["Dateofbirth"];
+        var age = jsonvalue["Age"];
         var address = jsonvalue["Address"];
         var city = jsonvalue["City"];
         var pincode = jsonvalue["Pincode"];
@@ -86,6 +88,16 @@ function Validation(jsonvalue) {
         }
         else if (!gender) {
             registerSechma.Message = "Gender is rquire";
+            registerSechma.Status = false;
+            return registerSechma;
+        }
+        else if (!dateofbirth) {
+            registerSechma.Message = "dateofbirth is rquire";
+            registerSechma.Status = false;
+            return registerSechma;
+        }
+        else if (!age) {
+            registerSechma.Message = "age is rquire";
             registerSechma.Status = false;
             return registerSechma;
         }
@@ -244,7 +256,7 @@ const registerAppionmentHelper = {
 
     async findByEmail(Email) {
         console.log("email");
-        return await db.Users.find({ Email }).toArray();
+        return await db.Users.find({Email}).toArray();
     },
 
     create(user1) {

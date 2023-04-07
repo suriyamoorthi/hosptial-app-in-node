@@ -9,7 +9,7 @@ const route = require ("express").Router();
  route.get("/PatientListRecptionModuleT", Service.PatientListRecptionModuleT);
  route.get("/AssignDoctor", Service.AssignDoctor);
  route.get("/DoctorListPatientModule", Service.DoctorListPatientModule);
- route.get("/patientVatilas12", Service.patientVatilas12);
+ route.post("/patientVatilas12", Service.patientVatilas12);
 
 
 module.exports =route;

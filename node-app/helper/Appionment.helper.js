@@ -36,12 +36,12 @@ function Validation(jsonvalue) {
         // var password = jsonvalue["Password"];
         var gender = jsonvalue["Gender"];
         var phonenumber = jsonvalue["Phonenumber"];
-        // var date = jsonvalue["Date"];
+        var date = jsonvalue ["Date"];
         var address = jsonvalue["Address"];
         var city = jsonvalue["City"];
         var pincode = jsonvalue["Pincode"];
 
-        console.log("Sucess");
+        console.log("Sucess APPIONMENT IN GETDATA");
         if (!firstName) {
            AppionmentSechma.Message = "Need First Firstname";
            AppionmentSechma.Status = false;
@@ -86,11 +86,11 @@ function Validation(jsonvalue) {
            AppionmentSechma.Status = false;
             return AppionmentSechma;
         }
-        // else if (!date) {
-        //    AppionmentSechma.Message = "Date is require";
-        //    AppionmentSechma.Status = false;
-        //     return AppionmentSechma;
-        // }
+        else if (!date) {
+           AppionmentSechma.Message = "Date is require";
+           AppionmentSechma.Status = false;
+            return AppionmentSechma;
+        }
         else if (!address) {
            AppionmentSechma.Message = "Address is require";
            AppionmentSechma.Status = false;
@@ -121,13 +121,14 @@ function Validation(jsonvalue) {
 }
 
 
-function AssignDoctorValidation(jsonvalue){
+
+function Patientvatilas(jsonvalue){
     try {
-        console.log(jsonvalue);
-        // var obj = validtionmessage;
-        var department =jsonvalue["Department"];
-        var doctorfirstname=jsonvalue["Doctorfirstname"];
-        var temp =jsonvalue["Temp"];
+        console.log("VALUE",jsonvalue);
+        
+      
+        var doctorfullname=jsonvalue["Doctorfullname"];
+        var temperature=jsonvalue["Temperature"];
         var Bp =jsonvalue["Bp"];
         var weight =jsonvalue["Weight"];
         var height =jsonvalue["Height"];
@@ -143,43 +144,42 @@ function AssignDoctorValidation(jsonvalue){
         var pincode = jsonvalue["Pincode"];
 
         console.log("Sucess");
-        if (!department) {
-            AppionmentSechma.Message = "Need First  department";
+        // if (!department) {
+        //     AppionmentSechma.Message = "Need First  department";
+        //     AppionmentSechma.Status = false;
+        //      return AppionmentSechma;
+ 
+        //  }
+         if (!doctorfullname) {
+            AppionmentSechma.Message = "Need First Doctorfullname";
             AppionmentSechma.Status = false;
              return AppionmentSechma;
  
          }
-         if (!doctorfirstname) {
-            AppionmentSechma.Message = "Need First doctorfirstname";
+         if (!temperature) {
+            AppionmentSechma.Message = "Need  temp is must";
             AppionmentSechma.Status = false;
              return AppionmentSechma;
- 
          }
-         if (!temp) {
-            AppionmentSechma.Message = "Need First temp";
-            AppionmentSechma.Status = false;
-             return AppionmentSechma;
- 
-         }
-         if (!Bp) {
+         else if (!Bp) {
             AppionmentSechma.Message = "Need First Bp";
             AppionmentSechma.Status = false;
              return AppionmentSechma;
  
          }
-         if (!weight) {
+         else if (!weight) {
             AppionmentSechma.Message = "Need First weight";
             AppionmentSechma.Status = false;
              return AppionmentSechma;
  
          }
-         if (!height) {
+         else if (!height) {
             AppionmentSechma.Message = "Need First height";
             AppionmentSechma.Status = false;
              return AppionmentSechma;
  
          }
-        if (!firstName) {
+         else if (!firstName) {
            AppionmentSechma.Message = "Need First Firstname";
            AppionmentSechma.Status = false;
             return AppionmentSechma;
@@ -223,11 +223,11 @@ function AssignDoctorValidation(jsonvalue){
            AppionmentSechma.Status = false;
             return AppionmentSechma;
         }
-        // else if (!date) {
-        //    AppionmentSechma.Message = "Date is require";
-        //    AppionmentSechma.Status = false;
-        //     return AppionmentSechma;
-        // }
+        else if (!date) {
+           AppionmentSechma.Message = "Date is require";
+           AppionmentSechma.Status = false;
+            return AppionmentSechma;
+        }
         else if (!address) {
            AppionmentSechma.Message = "Address is require";
            AppionmentSechma.Status = false;
@@ -250,49 +250,6 @@ function AssignDoctorValidation(jsonvalue){
             return AppionmentSechma;
 
         }
-    }
-    catch (err) {
-        console.log(err);
-
-    }
-
-}
-
-function PatientVatilasValidation(jsonvalue){
-    try{
-
-      var temperature =jsonvalue["Temperature"];
-      var bp =jsonvalue["Bp"];
-      var weight =jsonvalue["Weight"];
-      var height =jsonvalue["Height"];
-
-       if (String(temperature).length <= 4) {
-        AppionmentSechma.Message = "temperature 4 required";
-        AppionmentSechma.Status = false;
-         return AppionmentSechma;
-     }
-     else if (String(bp).length <= 4) {
-        AppionmentSechma.Message = "Bp 4 required";
-        AppionmentSechma.Status = false;
-         return AppionmentSechma;
-     }
-     else if (String(weight).length <= 4) {
-        AppionmentSechma.Message = " weight 4 required";
-        AppionmentSechma.Status = false;
-         return AppionmentSechma;
-     }
-     else if (String(height).length <= 4) {
-        AppionmentSechma.Message = " height 4 required";
-        AppionmentSechma.Status = false;
-         return AppionmentSechma;
-     }
-     else {
-        console.log("Sucess1");
-       AppionmentSechma.Message = "Success";
-       AppionmentSechma.Status = true;
-        return AppionmentSechma;
-
-    }
     }
     catch (err) {
         console.log(err);
@@ -315,11 +272,11 @@ const userAppionmentHelper = {
 
     },
 
-    AssaginDoctorValidationAppionment(AssignDoctorUser) {
+    ValidatePatientvatilas( patientVatilasUser) {
 
         try {
-            console.log("entre");
-            return AssignDoctorValidation(AssignDoctorUser)
+            console.log("entre Patientvatilas");
+            return Patientvatilas( patientVatilasUser)
         }
         catch ({ details: [{ message }] }) {
 
@@ -328,18 +285,8 @@ const userAppionmentHelper = {
 
     },
 
-    PatientVatilas(patientVatilasUser) {
-
-        try {
-            console.log("entre");
-            return PatientVatilasValidation(patientVatilasUser)
-        }
-        catch ({ details: [{ message }] }) {
-
-            throw new Error(message);
-        }
-
-    },
+ 
+   
 
     async CheckAppointmentAllReadyExist(Email, Date) {
         try {
@@ -364,6 +311,9 @@ const userAppionmentHelper = {
     find() {
         return db.Appionment.find().toArray();
     },
+    findGetPatientVisityHistory() {
+        return db.PatientDetails.find().toArray();
+    },
     
     findUsers(Usertype) {
         console.log("Emailid", Usertype);
@@ -380,9 +330,12 @@ const userAppionmentHelper = {
         return db.Appionment.insertOne(user1);
     },
 
-    createPatientVatilas() {
-        return db.PatientDetails.insertOne();
+    createPatientVatilas(User) {
+        console.log("moorthi");
+        return db.PatientDetails.insertOne(User);
+        
     },
+
 
    
 }

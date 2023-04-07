@@ -18,7 +18,7 @@ function apibodyconstruct(statuscode, message, bodymessage) {
 
     return apiboday;
 
-    
+
 }
 
 const authService = {
@@ -27,7 +27,7 @@ const authService = {
     async registerappionment(req, res) {
 
         try {
-           
+
             //Data Validation
             const registerUser = await helper.ValidateAppionmentRegister(req.body);
 
@@ -40,21 +40,18 @@ const authService = {
                 console.log("@@@@@@");
                 const userRsgister = await helper.findByEmail(req.body["Email"]);
 
-                // const datatype = jsonvalues["datatype"];
-                //  insert jsonvalues["datatype"]
-                // console.log("datd" ,datatype);
-                //if status true
                 if (userRsgister.length == 0) {
                     console.log("lenth");
 
                     //Password Hash Validation
 
-
                     const salt = await bcrypt.genSalt();
                     const result = await bcrypt.hash(req.body["Password"], salt);
                     req.body["Password"] = result
                     console.log("Password", result);
-
+                    const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`
+                    req.body["UserFullname"] = addname;
+                    console.log("ADD DOCTOR NAME", addname);
 
 
                     //Insert User
@@ -96,10 +93,10 @@ const authService = {
             if (user.Status) {
 
                 const userLogin = await helper.findByEmail(req.body["Email"])
-
+                console.log("Erroe check", userLogin );
                 if (userLogin.length > 0) {
                     console.log("length");
-                        const result =userLogin[0].Password;
+                    const result = userLogin[0].Password;
                     console.log("PASSWORD", result);
                     const isSame = await bcrypt.compare(req.body["Password"], userLogin[0].Password);
                     if (isSame) {
@@ -113,7 +110,7 @@ const authService = {
 
                     }
                 } else {
-                    res.send(apibodyconstruct(statuscode_sucess, "register first", ""));
+                    res.send(apibodyconstruct(statuscode_Notfound, "Email is Invalid Register first", ""));
                 }
 
 
@@ -140,23 +137,23 @@ const authService = {
 
             if (forgotUser.Status) {
                 const forgotEmail = await helper.findByEmail(req.body["Email"]);
-                console.log("EMAIL VALUE",forgotEmail );
+                console.log("EMAIL VALUE", forgotEmail);
                 if (forgotEmail.length == 1) {
 
                     const salt = await bcrypt.genSalt();
                     const result = await bcrypt.hash(req.body["Password"], salt);
                     req.body["Password"] = result;
-                    const  value  = await helper.update({ _id:forgotEmail[0]._id,Password: req.body["Password"] });
-                     
+                    const value = await helper.update({ _id: forgotEmail[0]._id, Password: req.body["Password"] });
+
                     if (value) {
-                       
-        
+
+
                         res.send(apibodyconstruct(statuscode_Notfound, "Forgot success", ""));
                     }
                     else {
                         res.send(apibodyconstruct(statuscode_Notfound, "Forgot Not success", ""));
                     }
-                   
+
 
                 }
                 else {
@@ -168,7 +165,7 @@ const authService = {
             }
         }
         catch (err) {
-            res.send({ error:err.message });
+            res.send({ error: err.message });
         }
 
     }
