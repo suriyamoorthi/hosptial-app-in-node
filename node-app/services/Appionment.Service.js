@@ -35,9 +35,9 @@ const AppionmentService = {
                 console.log("APPIONMENT", userAllreayAppionment)
 
                 if (userAllreayAppionment.length == 0) {
-                    const addname =`${req.body["Firstname"]} ${req.body["Lastname"]}`
+                    const addname = `${req.body["Firstname"]} ${req.body["Lastname"]}`
 
-                    req.body["Fullname"]=addname;
+                    req.body["Fullname"] = addname;
 
                     const createApoointment = await helper.create(req.body);
 
@@ -192,7 +192,7 @@ const AppionmentService = {
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
-                const addname =`${req.body["Firstname"]} ${req.body["Lastname"]}`;
+                const addname = `${req.body["Firstname"]} ${req.body["Lastname"]}`;
                 req.body["Fullname"] = addname;
                 const createPatientVatilas = await helper.createPatientVatilas(req.body);
                 console.log("ERROR1234");
@@ -216,14 +216,14 @@ const AppionmentService = {
 
     },
 
-    async doctormoduleallpatient(req, res){
-  try {
+    async doctormoduleallpatient(req, res) {
+        try {
             const allaptient = await helper.findGetPatientVisityHistory();
             console.log("GET PATIENTVISITY", allaptient);
             console.log("ALLUSERS");
-            const { Doctorfullname} = req.query;
-            console.log("DATEQURY", Doctorfullname  );
-            data =allaptient.filter((history) => history.Doctorfullname == Doctorfullname )
+            const { Doctorfullname } = req.query;
+            console.log("DATEQURY", Doctorfullname);
+            data = allaptient.filter((history) => history.Doctorfullname == Doctorfullname)
             console.log("IFVALIDATION", data);
             res.send(data);
             // res.send(allaptient);
@@ -232,11 +232,30 @@ const AppionmentService = {
             console.log("Error-", err.message);
             res.status(500).send({ error: "cannot fetch all users -name" });
         }
-    }
-   
+    },
 
-    }
+    async doctorModuleCurrentPatientList(req, res) {
+        try {
+            console.log("STEP==1");
+            const currentPatient = await helper.findGetPatientVisityHistory();
+            console.log("CurrentDayAppionment", currentPatient);
+            console.log("STEP==2");
+            const {Doctorfullname,Date}=req.query;
+            console.log("FIND DATA",Doctorfullname,Date);
+            console.log("STEP==3");
+             const DoctorCurrentPatientdata =currentPatient.filter((values)=>values.Doctorfullname === Doctorfullname &&values.Date === Date );
+            console.log("STEP==4");
+            res.send( DoctorCurrentPatientdata);
+        }
+
     
+    catch(err){
+console.log("error1234");
+    }
+}
+
+}
+
 
 
 
