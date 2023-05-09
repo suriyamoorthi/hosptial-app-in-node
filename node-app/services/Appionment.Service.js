@@ -87,7 +87,7 @@ const AppionmentService = {
             const data = await helper.findGetPatientVisityHistory();
             console.log("GET PATIENTVISITY", data);
             console.log("ALLUSERS");
-            //     let currentDate = new Date().toJSON().slice(0, 10);
+            //     let currentDoctorfullname= new Date().toJSON().slice(0, 10);
             // console.log(currentDate); // "2022-06-17"
             res.send(data);
         }
@@ -153,6 +153,7 @@ const AppionmentService = {
     },
 
     async AssignDoctor(req, res) {
+        console.log("errorssss");
         try {
             const AssginDoctorList = await helper.findUsers(req.body["Usertype"] = 2);
             console.log("ASSGIN DOCTOR", AssginDoctorList);
@@ -213,9 +214,30 @@ const AppionmentService = {
             console.log("404")
         }
 
+    },
+
+    async doctormoduleallpatient(req, res){
+  try {
+            const allaptient = await helper.findGetPatientVisityHistory();
+            console.log("GET PATIENTVISITY", allaptient);
+            console.log("ALLUSERS");
+            const { Doctorfullname} = req.query;
+            console.log("DATEQURY", Doctorfullname  );
+            data =allaptient.filter((history) => history.Doctorfullname == Doctorfullname )
+            console.log("IFVALIDATION", data);
+            res.send(data);
+            // res.send(allaptient);
+        }
+        catch (err) {
+            console.log("Error-", err.message);
+            res.status(500).send({ error: "cannot fetch all users -name" });
+        }
     }
+   
+
+    }
+    
 
 
-}
 
 module.exports = AppionmentService;
