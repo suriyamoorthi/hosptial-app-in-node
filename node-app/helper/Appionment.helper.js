@@ -314,7 +314,7 @@ const userAppionmentHelper = {
     findGetPatientVisityHistory() {
         return db.PatientDetails.find().toArray();
     },
-    
+   
     findUsers(Usertype) {
         console.log("Emailid", Usertype);
         return db.Users.find({Usertype}).toArray();
