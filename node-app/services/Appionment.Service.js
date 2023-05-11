@@ -35,7 +35,7 @@ const AppionmentService = {
                 console.log("APPIONMENT", userAllreayAppionment)
 
                 if (userAllreayAppionment.length == 0) {
-                    const addname =`${req.body["Firstname"]}${req.body["Lastname"]}`
+                    const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`
 
                     req.body["Fullname"] = addname;
 
@@ -89,7 +89,7 @@ const AppionmentService = {
             console.log("ALLUSERS");
             const { Fullname } = req.query;
             console.log("DATEQURY", Fullname);
-          const  data = allaptient.filter((history) => history.Fullname == Fullname)
+            const data = allaptient.filter((history) => history.Fullname == Fullname)
             console.log("IFVALIDATION", data);
             res.send(data);
         }
@@ -146,18 +146,18 @@ const AppionmentService = {
             const currentPatient = await helper.findGetPatientVisityHistory();
             console.log("CurrentDayAppionment", currentPatient);
             console.log("STEP==2");
-            const {Fullname}=req.query;
-            console.log("FIND DATA",Fullname);
+            const { Fullname } = req.query;
+            console.log("FIND DATA", Fullname);
             console.log("STEP==3");
-             const DoctorCurrentPatientdata =currentPatient.filter((values)=>values.Fullname==Fullname );
+            const DoctorCurrentPatientdata = currentPatient.filter((values) => values.Fullname == Fullname);
             console.log("STEP==4");
-            res.send( DoctorCurrentPatientdata);
+            res.send(DoctorCurrentPatientdata);
         }
 
-    
-    catch(err){
-console.log("error1234");
-    }
+
+        catch (err) {
+            console.log("error1234");
+        }
 
         // const DoctorList = await helper.findUsers(req.body["Usertype"] = 2);
         // console.log("Doctor List Patient Module", DoctorList);
@@ -199,30 +199,25 @@ console.log("error1234");
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
-                const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist( req.body["Date"])
-                console.log("APPIONMENT", userAllreayAppionment)
 
                 if (userAllreayAppionment.length == 0) {
-                const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`;
-                req.body["Fullname"] = addname;
-                const createPatientVatilas = await helper.createPatientVatilas(req.body);
-                console.log("ERROR1234");
-                
-                if (createPatientVatilas) {
+                    const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`;
+                    req.body["Fullname"] = addname;
+                    const createPatientVatilas = await helper.createPatientVatilas(req.body);
+                    console.log("ERROR1234");
 
-                    return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucess fully", ""));
-                }
-                else {
-                    return res.send(apibodyconstruct(statuscode_Notfound, "AssginDoctor  not created sucess fully", ""));
+                    if (createPatientVatilas) {
+
+                        return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucess fully", ""));
+                    }
+                    else {
+                        return res.send(apibodyconstruct(statuscode_Notfound, "AssginDoctor  not created sucess fully", ""));
+                    }
+
                 }
 
             }
-         else {
-            return res.send(apibodyconstruct(statuscode_Notfound, " One user Perday one appionment only", ""));
-            // appionment alredy created for this emailid
-        }
-    }
-            
+
             else {
 
                 return res.send(apibodyconstruct(statuscode_Notfound, patientVatilasUser.Message, ""));
@@ -258,19 +253,19 @@ console.log("error1234");
             const currentPatient = await helper.findGetPatientVisityHistory();
             console.log("CurrentDayAppionment", currentPatient);
             console.log("STEP==2");
-            const {Doctorfullname,Date}=req.query;
-            console.log("FIND DATA",Doctorfullname,Date);
+            const { Doctorfullname, Date } = req.query;
+            console.log("FIND DATA", Doctorfullname, Date);
             console.log("STEP==3");
-             const DoctorCurrentPatientdata =currentPatient.filter((values)=>values.Doctorfullname === Doctorfullname &&values.Date === Date );
+            const DoctorCurrentPatientdata = currentPatient.filter((values) => values.Doctorfullname === Doctorfullname && values.Date === Date);
             console.log("STEP==4");
-            res.send( DoctorCurrentPatientdata);
+            res.send(DoctorCurrentPatientdata);
         }
 
-    
-    catch(err){
-console.log("error1234");
+
+        catch (err) {
+            console.log("error1234");
+        }
     }
-}
 
 }
 
