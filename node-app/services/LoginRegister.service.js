@@ -50,7 +50,7 @@ const authService = {
                     req.body["Password"] = result
                     console.log("Password", result);
                     const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`
-                    req.body["UserFullname"] = addname;
+                    req.body["Fullname"] = addname;
                     console.log("ADD DOCTOR NAME", addname);
 
 
