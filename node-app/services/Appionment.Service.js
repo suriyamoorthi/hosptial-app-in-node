@@ -194,24 +194,35 @@ console.log("error1234");
     async patientVatilas12(req, res) {
         try {
             console.log("ERROR1");
-            const patientVatilasUser = await helper.ValidatePatientvatilas(req.body);
+            const patientVatilasUser = await helper.ValidatePatientvatilas();
             console.log("ERROR12", patientVatilasUser);
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
+                const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist(req.body["Email"], req.body["Date"])
+                console.log("APPIONMENT", userAllreayAppionment)
+
+                if (userAllreayAppionment.length == 0) {
                 const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`;
                 req.body["Fullname"] = addname;
                 const createPatientVatilas = await helper.createPatientVatilas(req.body);
                 console.log("ERROR1234");
+                
                 if (createPatientVatilas) {
 
                     return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucess fully", ""));
                 }
                 else {
-                    return res.send(apibodyconstruct(statuscode_Notfound, "appionment not created sucess fully", ""));
+                    return res.send(apibodyconstruct(statuscode_Notfound, "AssginDoctor  not created sucess fully", ""));
                 }
 
             }
+         else {
+            return res.send(apibodyconstruct(statuscode_Notfound, " One user Perday one appionment only", ""));
+            // appionment alredy created for this emailid
+        }
+    }
+            
             else {
 
                 return res.send(apibodyconstruct(statuscode_Notfound, patientVatilasUser.Message, ""));
