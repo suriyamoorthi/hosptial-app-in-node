@@ -199,7 +199,7 @@ console.log("error1234");
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
-                const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist(req.body["Email"], req.body["Date"])
+                const userAllreayAppionment = await helper.CheckAppointmentAllReadyExist( req.body["Date"])
                 console.log("APPIONMENT", userAllreayAppionment)
 
                 if (userAllreayAppionment.length == 0) {
