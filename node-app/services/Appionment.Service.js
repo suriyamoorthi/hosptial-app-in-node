@@ -35,7 +35,7 @@ const AppionmentService = {
                 console.log("APPIONMENT", userAllreayAppionment)
 
                 if (userAllreayAppionment.length == 0) {
-                    const addname = `${req.body["Firstname"]} ${req.body["Lastname"]}`
+                    const addname =`${req.body["Firstname"]}${req.body["Lastname"]}`
 
                     req.body["Fullname"] = addname;
 
@@ -84,13 +84,22 @@ const AppionmentService = {
 
     async getPatientVisityHistory(req, res) {
         try {
-            const data = await helper.findGetPatientVisityHistory();
-            console.log("GET PATIENTVISITY", data);
+            const allaptient = await helper.findGetPatientVisityHistory();
+            console.log("GET PATIENTVISITY", allaptient);
             console.log("ALLUSERS");
-            //     let currentDoctorfullname= new Date().toJSON().slice(0, 10);
-            // console.log(currentDate); // "2022-06-17"
+            const { Fullname } = req.query;
+            console.log("DATEQURY", Fullname);
+          const  data = allaptient.filter((history) => history.Fullname == Fullname)
+            console.log("IFVALIDATION", data);
             res.send(data);
         }
+        //     const data = await helper.findGetPatientVisityHistory();
+        //     console.log("GET PATIENTVISITY", data);
+        //     console.log("ALLUSERS");
+        //     //     let currentDoctorfullname= new Date().toJSON().slice(0, 10);
+        //     // console.log(currentDate); // "2022-06-17"
+        //     res.send(data);
+        // }
         catch (err) {
             console.log("Error-", err.message);
             res.status(500).send({ error: "cannot fetch all users -name" });
@@ -102,20 +111,8 @@ const AppionmentService = {
     async getCurrentDayAppionmentPatientList(req, res) {
         try {
 
-
-            //     console.log("QUREY",req.query.Date);
-
-            //     var j = {
-            //         "Date": req.query.Date
-            //       };
-
-            //    var jsonobject = JSON.stringify(j);
-            //    console.log("JsonOBJECT",jsonobject);
             const allUser = await helper.find();
             console.log("ALL USER", allUser);
-            //  let currentDate = new Date().toJSON().slice(0, 10);
-            // console.log(currentDate); // "2022-06-17"
-
 
             const { Date } = req.query;
             console.log("DATEQURY", Date);
@@ -143,11 +140,29 @@ const AppionmentService = {
     },
 
     async DoctorListPatientModule(req, res) {
+        console.log("STEP==1");
+        try {
+            console.log("STEP==1");
+            const currentPatient = await helper.findGetPatientVisityHistory();
+            console.log("CurrentDayAppionment", currentPatient);
+            console.log("STEP==2");
+            const {Fullname}=req.query;
+            console.log("FIND DATA",Fullname);
+            console.log("STEP==3");
+             const DoctorCurrentPatientdata =currentPatient.filter((values)=>values.Fullname==Fullname );
+            console.log("STEP==4");
+            res.send( DoctorCurrentPatientdata);
+        }
 
-        const DoctorList = await helper.findUsers(req.body["Usertype"] = 2);
-        console.log("Doctor List Patient Module", DoctorList);
+    
+    catch(err){
+console.log("error1234");
+    }
 
-        res.send(DoctorList);
+        // const DoctorList = await helper.findUsers(req.body["Usertype"] = 2);
+        // console.log("Doctor List Patient Module", DoctorList);
+
+        // res.send(DoctorList);
 
 
     },
@@ -161,10 +176,6 @@ const AppionmentService = {
 
             res.send(AssginDoctorList);
 
-            // const {_id}=req.query;
-            // console.log("DATEQURY",_id);
-            // Doctordata=AssginDoctorList.filter((history)=>history._id ==_id)
-            // console.log("IFVALIDATION",Doctordata);
 
 
         }
@@ -175,10 +186,6 @@ const AppionmentService = {
         }
 
 
-        // const {_id}=req.query;
-        // console.log("DATEQURY",_id);
-        // Doctordata=allUser.filter((history)=>history._id ==_id)
-        // console.log("IFVALIDATION",Doctordata);
 
 
 
@@ -192,7 +199,7 @@ const AppionmentService = {
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
-                const addname = `${req.body["Firstname"]} ${req.body["Lastname"]}`;
+                const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`;
                 req.body["Fullname"] = addname;
                 const createPatientVatilas = await helper.createPatientVatilas(req.body);
                 console.log("ERROR1234");
