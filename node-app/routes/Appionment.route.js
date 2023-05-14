@@ -13,6 +13,10 @@ const route = require ("express").Router();
  route.get("/doctorModuleCurrentPatientList", Service.doctorModuleCurrentPatientList);
  route.post("/patientVatilas12", Service.patientVatilas12);
 
+ route.get("/BPgeraphdata", Service.BPgeraphdata);
+ route.get("/Weightgraph", Service.Weightgraph);
+ route.post("/Precription",Service.Precription);
+ 
 
  
 

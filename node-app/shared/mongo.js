@@ -24,6 +24,7 @@ const mongo = {
         this.Users = this.db.collection("Users");
         this.Appionment = this.db.collection("Appionment");
         this.PatientDetails=this.db.collection("PatientDetails");
+        this.PatientPercription=this.db.collection("PatientPercription");
         console.log(`collection intialized`);
 
     },

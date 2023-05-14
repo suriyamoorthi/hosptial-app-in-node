@@ -473,4 +473,9 @@ const adminAppionmentHelper = {
 
 }
 
+// Update({_id, ...findAdminEmail}){
+//     console.log("Admin UOADTE",findAdminEmail)
+//     return db.Users.findOneAndUpdate({_id:ObjectId(_id)}, {$set: findAdminEmail},{returnDocument:"after"})
+// }
+
 module.exports = adminAppionmentHelper;

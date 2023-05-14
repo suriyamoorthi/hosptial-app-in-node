@@ -26,8 +26,9 @@ const AppionmentService = {
         try {
 
             //body validation
+            console.log("APPIONMENT==1")
             const appionmentUser = await helper.ValidateAppoinment(req.body);
-
+            console.log("APPIONMENT==12", appionmentUser)
             //if status true
             if (appionmentUser.Status) {
 
@@ -191,31 +192,54 @@ const AppionmentService = {
 
     },
 
+    // async assginDoctorAppionment(req, res) {
+    //     try {
+    //         const datadetails = await helper.AssignDoctorcheckAppionment(req.body["Email"], req.body["Date"]);
+    //         console.log("datadetails", datadetails);
+
+    //         if (datadetails.length == 0) {
+
+    //         }
+    //         //  const datadetails = await helper.findGetPatientVisityHistory();
+
+    //         res.send(datadetails)
+    //     }
+    //     catch {
+    //         console.log("404");
+    //     }
+    // },
+
     async patientVatilas12(req, res) {
         try {
             console.log("ERROR1");
-            const patientVatilasUser = await helper.ValidatePatientvatilas();
+            const patientVatilasUser = await helper.ValidatePatientvatilas(req.body);
             console.log("ERROR12", patientVatilasUser);
 
             if (patientVatilasUser.Status) {
                 console.log("ERROR123", patientVatilasUser);
+                const datadetails = await helper.AssignDoctorcheckAppionment(req.body["Email"], req.body["Date"]);
+                console.log("datadetails", datadetails);
 
-                if (userAllreayAppionment.length == 0) {
+                if (datadetails.length == 0) {
+
+
+                    console.log("ffffffff");
                     const addname = `${req.body["Firstname"]}${req.body["Lastname"]}`;
                     req.body["Fullname"] = addname;
                     const createPatientVatilas = await helper.createPatientVatilas(req.body);
                     console.log("ERROR1234");
-
                     if (createPatientVatilas) {
 
-                        return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucess fully", ""));
+                        return res.send(apibodyconstruct(statuscode_sucess, "AssginDoctor create sucessfully", ""));
                     }
                     else {
-                        return res.send(apibodyconstruct(statuscode_Notfound, "AssginDoctor  not created sucess fully", ""));
+                        return res.send(apibodyconstruct(statuscode_Notfound, "AssginDoctor not Created Retry", ""));
                     }
-
                 }
-
+                else {
+                    return res.send(apibodyconstruct(statuscode_Notfound, " Already Assgin Doctor This Patient", ""));
+                    // appionment alredy created for this emailid
+                }
             }
 
             else {
@@ -257,7 +281,7 @@ const AppionmentService = {
             console.log("FIND DATA", Doctorfullname, Date);
             console.log("STEP==3");
             const DoctorCurrentPatientdata = currentPatient.filter((values) => values.Doctorfullname === Doctorfullname && values.Date === Date);
-            console.log("STEP==4");
+            console.log("STEP==4", DoctorCurrentPatientdata);
             res.send(DoctorCurrentPatientdata);
         }
 
@@ -265,7 +289,78 @@ const AppionmentService = {
         catch (err) {
             console.log("error1234");
         }
+    },
+
+    async BPgeraphdata(req, res) {
+        try {
+            console.log("STEP==1");
+            const { Email } = req.query;
+
+            if (Email.length > 0) {
+                const BPPatient = await helper.getBPGraphDetails(Email);
+                console.log("CurrentDayAppionment", BPPatient);
+
+                res.send(BPPatient);
+            } else {
+                console.log("string empty");
+            }
+        }
+        catch (error) {
+            console.log(error.Message)
+        }
+
+    },
+
+    async Weightgraph(req, res) {
+        try {
+            const { Email } = req.query;
+            if (Email.length > 0) {
+                const BPPatient = await helper.getBPGraphDetails(Email);
+                console.log("CurrentDayAppionment", BPPatient);
+
+                // return res.send(apibodyconstruct(statuscode_sucess, "No user", ""));
+                res.send(BPPatient);
+            }
+            else {
+                console.log(error.Message);
+            }
+        }
+        catch (error) {
+            console.log(error.Message)
+        }
+
+    },
+
+
+    async Precription(req, res) {
+        console.log("aaaaaa==1")
+        try {
+            console.log("aaaaaa==2")
+            const precerptionUser = await helper.ValidationDoctorPercription(req.body);
+            console.log("aaaaaa==3", precerptionUser);
+            if (precerptionUser.Status) {
+                console.log("aaaaaa==4")
+                const DctoraddPatientPercription = await helper.dctorpercriptiondata(req.body);
+                console.log("aaaaaa==4", DctoraddPatientPercription);
+                if (DctoraddPatientPercription) {
+                    return res.send(apibodyconstruct(statuscode_sucess, "DctoraddPatientPercription sucess fully", ""));
+                }
+                else {
+                    return res.send(apibodyconstruct(statuscode_Notfound, "Retry", ""));
+                }
+            }
+            else {
+
+                return res.send(apibodyconstruct(statuscode_Notfound, precerptionUser.Message, ""));
+            }
+        }
+        catch {
+
+        }
+
     }
+
+
 
 }
 
