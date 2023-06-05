@@ -480,9 +480,18 @@ const userAppionmentHelper = {
 
         }
 
+    },
+    
+    async findprecriptiondata(){
+        try{
+            console.log("FIRAST");
+        return await db.PatientPercription.find().toArray();
     }
+    catch (execption) {
+        console.log(execption);
+}
 
-
+    }
 
 }
 

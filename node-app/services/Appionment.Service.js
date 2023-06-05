@@ -358,11 +358,60 @@ const AppionmentService = {
 
         }
 
-    }
+    },
+
+    async Prescriptiondetailsdata(req, res) {
+        // console.log("STEP==1");
+        // try {
+        //     const allUser = await helper.findprecriptiondata(req.body);
+        //     console.log("DATA", allUser);
+
+        //     res.send(allUser);
+        // }
+        // catch (err) {
+        //     console.log("Error-", err.message);
+        //     res.status(500).send({ error: "cannot fetch all users -name" });
+        // }
+            try {
+                console.log("STEP==1");
+                const currentPatient = await helper.findprecriptiondata();
+                console.log("CurrentDayAppionment", currentPatient);
+                console.log("STEP==2");
+                const {Email, Date } = req.query;
+                console.log("FIND DATA", Email, Date);
+                console.log("STEP==3");
+                const DoctorCurrentPatientdata = currentPatient.filter((values) => values.Email === Email && values.Date === Date);
+                console.log("STEP==4", DoctorCurrentPatientdata);
+                res.send(DoctorCurrentPatientdata);
+            }
+
+
+            catch (err) {
+                console.log("error1234");
+            }
+        },
+    //     console.log("STEP==1");
+    //     try {
+    //         console.log("STEP==1");
 
 
 
+    //         const Prescription = await helper.findprecriptiondata();
+    //         console.log("CurrentDayAppionment", Prescription);
+    //         const { Email, Date } = req.query;
+    //         if (Email.length, Date.length > 0) {
+    //             res.send(Prescription);
+    //         } else {
+    //             console.log("string empty");
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.log(error.Message)
+    //     }
+
+    // }
 }
+
 
 
 

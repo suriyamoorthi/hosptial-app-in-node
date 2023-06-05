@@ -16,6 +16,7 @@ const route = require ("express").Router();
  route.get("/BPgeraphdata", Service.BPgeraphdata);
  route.get("/Weightgraph", Service.Weightgraph);
  route.post("/Precription",Service.Precription);
+ route.get("/Prescriptiondetailsdata",Service.Prescriptiondetailsdata);
  
 
  
